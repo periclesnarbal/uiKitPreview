@@ -7,13 +7,21 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
+    
+    private lazy var contentView = TemplateView(frame: view.frame)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.addSubview(contentView)
     }
-
-
 }
 
+import SwiftUI
+struct PreviewViewController: PreviewProvider {
+    static var previews: some View {
+        ViewControllerPreview {
+            ViewController()
+        }.edgesIgnoringSafeArea(.all)
+    }
+}
