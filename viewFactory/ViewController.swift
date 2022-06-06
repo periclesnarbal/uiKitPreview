@@ -14,6 +14,19 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(contentView)
+        setupNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("abel"), object: nil)
+    }
+    
+    func setupNotifications() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("abel"), object: nil, queue: nil) {
+                notification in
+                print("abel")
+        }
     }
 }
 
