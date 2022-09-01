@@ -7,7 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B76EC3E52819EC0B0042C8C9 /* TemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76EC3E42819EC0B0042C8C9 /* TemplateView.swift */; };
+		4D37E11F28B3D4E6001966C7 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D37E11E28B3D4E6001966C7 /* CalendarCollectionViewCell.swift */; };
+		4D53649128B42B3D0024CE83 /* CalendarCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53649028B42B3D0024CE83 /* CalendarCollectionViewLayout.swift */; };
+		4D53649328B508F60024CE83 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53649228B508F60024CE83 /* CalendarHelper.swift */; };
+		4D59D64628BCECE4009A1466 /* CalendarRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D59D64528BCECE4009A1466 /* CalendarRoundedButton.swift */; };
+		4D59D64828BCEF70009A1466 /* CalendarColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D59D64728BCEF70009A1466 /* CalendarColorHelper.swift */; };
+		4D93D1C728BEB9A7008D8E3C /* CalendarMonthYearCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D93D1C628BEB9A7008D8E3C /* CalendarMonthYearCollectionViewLayout.swift */; };
+		4D93D1C928C0E4EE008D8E3C /* CalendarUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D93D1C828C0E4EE008D8E3C /* CalendarUtils.swift */; };
+		4DA2C93528BE3C44007A4F16 /* CalendarFontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA2C93428BE3C44007A4F16 /* CalendarFontHelper.swift */; };
+		4DA2C93728BE88B4007A4F16 /* CalendarMonthYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA2C93628BE88B4007A4F16 /* CalendarMonthYearView.swift */; };
+		4DA2C93928BEA895007A4F16 /* CalendarMonthYearCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA2C93828BEA895007A4F16 /* CalendarMonthYearCell.swift */; };
+		B76EC3E52819EC0B0042C8C9 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76EC3E42819EC0B0042C8C9 /* CalendarView.swift */; };
 		B76EC3E72819F0B50042C8C9 /* ViewControllerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76EC3E62819F0B50042C8C9 /* ViewControllerPreview.swift */; };
 		B76EC3E92819F5540042C8C9 /* ViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76EC3E82819F5540042C8C9 /* ViewPreview.swift */; };
 		B7CEE4B92819D1A800C652BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CEE4B82819D1A800C652BD /* AppDelegate.swift */; };
@@ -19,7 +29,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B76EC3E42819EC0B0042C8C9 /* TemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateView.swift; sourceTree = "<group>"; };
+		4D37E11E28B3D4E6001966C7 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		4D53649028B42B3D0024CE83 /* CalendarCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewLayout.swift; sourceTree = "<group>"; };
+		4D53649228B508F60024CE83 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
+		4D59D64528BCECE4009A1466 /* CalendarRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarRoundedButton.swift; sourceTree = "<group>"; };
+		4D59D64728BCEF70009A1466 /* CalendarColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarColorHelper.swift; sourceTree = "<group>"; };
+		4D93D1C628BEB9A7008D8E3C /* CalendarMonthYearCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthYearCollectionViewLayout.swift; sourceTree = "<group>"; };
+		4D93D1C828C0E4EE008D8E3C /* CalendarUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUtils.swift; sourceTree = "<group>"; };
+		4DA2C93428BE3C44007A4F16 /* CalendarFontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFontHelper.swift; sourceTree = "<group>"; };
+		4DA2C93628BE88B4007A4F16 /* CalendarMonthYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthYearView.swift; sourceTree = "<group>"; };
+		4DA2C93828BEA895007A4F16 /* CalendarMonthYearCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthYearCell.swift; sourceTree = "<group>"; };
+		B76EC3E42819EC0B0042C8C9 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		B76EC3E62819F0B50042C8C9 /* ViewControllerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerPreview.swift; sourceTree = "<group>"; };
 		B76EC3E82819F5540042C8C9 /* ViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPreview.swift; sourceTree = "<group>"; };
 		B7CEE4B52819D1A800C652BD /* viewFactory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = viewFactory.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,7 +102,17 @@
 				B7CEE4B82819D1A800C652BD /* AppDelegate.swift */,
 				B7CEE4BA2819D1A800C652BD /* SceneDelegate.swift */,
 				B7CEE4BC2819D1A800C652BD /* ViewController.swift */,
-				B76EC3E42819EC0B0042C8C9 /* TemplateView.swift */,
+				4DA2C93628BE88B4007A4F16 /* CalendarMonthYearView.swift */,
+				4DA2C93828BEA895007A4F16 /* CalendarMonthYearCell.swift */,
+				B76EC3E42819EC0B0042C8C9 /* CalendarView.swift */,
+				4D53649228B508F60024CE83 /* CalendarHelper.swift */,
+				4D93D1C828C0E4EE008D8E3C /* CalendarUtils.swift */,
+				4D59D64728BCEF70009A1466 /* CalendarColorHelper.swift */,
+				4DA2C93428BE3C44007A4F16 /* CalendarFontHelper.swift */,
+				4D37E11E28B3D4E6001966C7 /* CalendarCollectionViewCell.swift */,
+				4D53649028B42B3D0024CE83 /* CalendarCollectionViewLayout.swift */,
+				4D93D1C628BEB9A7008D8E3C /* CalendarMonthYearCollectionViewLayout.swift */,
+				4D59D64528BCECE4009A1466 /* CalendarRoundedButton.swift */,
 				B76EC3EA2819F5DF0042C8C9 /* SwiftUI */,
 				B7CEE4BE2819D1A800C652BD /* Main.storyboard */,
 				B7CEE4C12819D1AB00C652BD /* Assets.xcassets */,
@@ -163,12 +193,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B76EC3E52819EC0B0042C8C9 /* TemplateView.swift in Sources */,
+				B76EC3E52819EC0B0042C8C9 /* CalendarView.swift in Sources */,
+				4D53649328B508F60024CE83 /* CalendarHelper.swift in Sources */,
 				B76EC3E72819F0B50042C8C9 /* ViewControllerPreview.swift in Sources */,
+				4D59D64628BCECE4009A1466 /* CalendarRoundedButton.swift in Sources */,
+				4DA2C93528BE3C44007A4F16 /* CalendarFontHelper.swift in Sources */,
 				B7CEE4BD2819D1A800C652BD /* ViewController.swift in Sources */,
+				4D37E11F28B3D4E6001966C7 /* CalendarCollectionViewCell.swift in Sources */,
+				4DA2C93728BE88B4007A4F16 /* CalendarMonthYearView.swift in Sources */,
+				4D59D64828BCEF70009A1466 /* CalendarColorHelper.swift in Sources */,
+				4D93D1C928C0E4EE008D8E3C /* CalendarUtils.swift in Sources */,
+				4DA2C93928BEA895007A4F16 /* CalendarMonthYearCell.swift in Sources */,
+				4D93D1C728BEB9A7008D8E3C /* CalendarMonthYearCollectionViewLayout.swift in Sources */,
 				B7CEE4B92819D1A800C652BD /* AppDelegate.swift in Sources */,
 				B7CEE4BB2819D1A800C652BD /* SceneDelegate.swift in Sources */,
 				B76EC3E92819F5540042C8C9 /* ViewPreview.swift in Sources */,
+				4D53649128B42B3D0024CE83 /* CalendarCollectionViewLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,7 +357,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9QCEA3X339;
+				DEVELOPMENT_TEAM = URN4AT2U8P;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = viewFactory/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -325,6 +365,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,7 +375,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -345,7 +386,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9QCEA3X339;
+				DEVELOPMENT_TEAM = URN4AT2U8P;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = viewFactory/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -353,6 +394,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -362,7 +404,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
