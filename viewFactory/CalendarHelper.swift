@@ -9,9 +9,9 @@ import Foundation
 
 struct CalendarHelper {
     
-    let calendar = Calendar.current
+    static let calendar = Calendar.current
     
-    func monthString(date: Date) -> String
+    static func monthString(date: Date) -> String
     {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "LLLL"
@@ -21,7 +21,7 @@ struct CalendarHelper {
         return formatedMonth
     }
     
-    func monthString(month: Int) -> String
+    static func monthString(month: Int) -> String
     {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM"
@@ -33,21 +33,21 @@ struct CalendarHelper {
         return formatedMonth
     }
     
-    func month(date: Date) -> Int
+    static func month(date: Date) -> Int
     {
         let components = calendar.dateComponents([.month], from: date)
         guard let month = components.month else { return -1 }
         return month
     }
     
-    func yearString(date: Date) -> String
+    static func yearString(date: Date) -> String
     {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
         return dateFormatter.string(from: date)
     }
     
-    func year(date: Date) -> Int
+    static func year(date: Date) -> Int
     {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
@@ -55,39 +55,39 @@ struct CalendarHelper {
         return year
     }
     
-    func daysInMonth(date: Date) -> Int
+    static func daysInMonth(date: Date) -> Int
     {
         guard let range = calendar.range(of: .day, in: .month, for: date) else { return -1 }
         return range.count
     }
     
-    func dayOfMonth(date: Date) -> Int
+    static func dayOfMonth(date: Date) -> Int
     {
         let components = calendar.dateComponents([.day], from: date)
         guard let day = components.day else { return -1 }
         return day
     }
     
-    func weekDay(date: Date) -> Int
+    static func weekDay(date: Date) -> Int
     {
         let components = calendar.dateComponents([.weekday], from: date)
         guard let weekday = components.weekday else { return -1 }
         return weekday - 1
     }
     
-    func isPastDate(date: Date, granularity: Calendar.Component = .day) -> Bool {
+    static func isPastDate(date: Date, granularity: Calendar.Component = .day) -> Bool {
         let order = Calendar.current.compare(Date(), to: date, toGranularity: granularity)
         return order == .orderedDescending
     }
     
-    func getDateBy(day: Int, month: Int, year: Int) -> Date? {
+    static func getDateBy(day: Int, month: Int, year: Int) -> Date? {
         let contextDateString = String(format: "%02d/%02d/%d", day, month, year)
         let dateFormatter  = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.date(from: contextDateString)
     }
     
-    func dateToString(date: Date) -> String
+    static func dateToString(date: Date) -> String
     {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"

@@ -16,8 +16,6 @@ class CalendarMonthYearCell: UICollectionViewCell {
                                         "Julho", "Agosto", "Setembro",
                                         "Outubro", "Novembro", "Dezembro"]
     
-    private let calendar = CalendarHelper()
-    
     private var month: Int? {
         didSet {
             if let month = month {
@@ -71,6 +69,8 @@ class CalendarMonthYearCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
+        setConstraints()
     }
     
     // MARK: Public Methods
@@ -93,7 +93,7 @@ class CalendarMonthYearCell: UICollectionViewCell {
     
     func getDate() -> Date {
         guard let month = month, let year = year else { return Date() }
-        return calendar.getDateBy(day: 01, month: month, year: year) ?? Date()
+        return CalendarHelper.getDateBy(day: 01, month: month, year: year) ?? Date()
     }
     
     // MARK: Private Methods

@@ -21,6 +21,16 @@ class CalendarRoundedButton: UIButton {
         }
     }
     
+    override var isUserInteractionEnabled: Bool {
+        didSet {
+            if isUserInteractionEnabled {
+                enableCell()
+            } else {
+                disableCell()
+            }
+        }
+    }
+    
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         setupButton()
@@ -29,7 +39,8 @@ class CalendarRoundedButton: UIButton {
     // MARK: Init Methods
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupButton()
     }
     
     override func layoutSubviews() {
@@ -50,11 +61,27 @@ class CalendarRoundedButton: UIButton {
         backgroundColor = CalendarColorHelper.orange
         setTitleColor(.white, for: .normal)
         layer.borderWidth = 0
+        alpha = 1
     }
     
     private func unselcted() {
         backgroundColor = .white
         setTitleColor(CalendarColorHelper.blackText, for: .normal)
         layer.borderWidth = 1
+        alpha = 1
+    }
+    
+    private func disableCell() {
+        backgroundColor = CalendarColorHelper.gray
+        setTitleColor(CalendarColorHelper.blackText, for: .normal)
+        layer.borderWidth = 0
+        alpha = 0.5
+    }
+    
+    private func enableCell() {
+        backgroundColor = .white
+        setTitleColor(CalendarColorHelper.blackText, for: .normal)
+        layer.borderWidth = 1
+        alpha = 1
     }
 }

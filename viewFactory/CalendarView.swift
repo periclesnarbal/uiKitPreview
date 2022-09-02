@@ -23,8 +23,6 @@ final class CalendarView: UIView {
     
     private let weekDaysArray = ["dom", "seg", "ter", "qua", "qui", "sex", "sab"]
     
-    private let calendar = CalendarHelper()
-    
     private lazy var dynamicCollectionSize: (width: NSLayoutConstraint, height: NSLayoutConstraint) = {
         let height = calendarCollectionView.heightAnchor.constraint(equalToConstant: 0)
         let width = calendarCollectionView.widthAnchor.constraint(equalToConstant: 0)
@@ -34,8 +32,8 @@ final class CalendarView: UIView {
     
     private(set) var horizontalInset = CGFloat(16)
     
-    private lazy var currentMonth = calendar.month(date: Date())
-    private lazy var currentYear = calendar.year(date: Date())
+    private lazy var currentMonth = CalendarHelper.month(date: Date())
+    private lazy var currentYear = CalendarHelper.year(date: Date())
     
     private lazy var monthMatrix: [[Int?]] = [] {
         didSet {
@@ -59,8 +57,6 @@ final class CalendarView: UIView {
         button.setTitle("Dia", for: .normal)
         button.titleLabel?.font = CalendarFontHelper.montserrat500s14
         button.addTarget(self, action: #selector(diaButtonAction(_:)), for: .touchUpInside)
-        button.isSelected = true
-        diaButtonAction(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -68,6 +64,8 @@ final class CalendarView: UIView {
     private lazy var periodoButton: CalendarRoundedButton = {
         let button = CalendarRoundedButton(type: UIButton.ButtonType.system)
         button.setTitle("Período", for: .normal)
+        button.isSelected = true
+        periodoButtonAction(button)
         button.titleLabel?.font = CalendarFontHelper.montserrat500s14
         button.addTarget(self, action: #selector(periodoButtonAction(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -211,10 +209,9 @@ final class CalendarView: UIView {
             diaButton.bottomAnchor.constraint(equalTo: calendarTopButtonsView.bottomAnchor, constant: -12),
 
             periodoButton.leadingAnchor.constraint(equalTo: diaButton.trailingAnchor, constant: 4),
-            periodoButton.topAnchor.constraint(equalTo: calendarTopButtonsView.topAnchor, constant: 13),
-            periodoButton.bottomAnchor.constraint(equalTo: calendarTopButtonsView.bottomAnchor, constant: -12),
+            periodoButton.centerYAnchor.constraint(equalTo: diaButton.centerYAnchor),
             
-            calendarHeaderView.heightAnchor.constraint(equalToConstant: 58),
+            calendarHeaderView.heightAnchor.constraint(equalToConstant: 50),
             calendarHeaderView.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor),
             
             monthYearButton.leadingAnchor.constraint(equalTo: calendarHeaderView.leadingAnchor, constant: horizontalInset),
@@ -234,9 +231,9 @@ final class CalendarView: UIView {
     
     private func createMonthBy(month: Int, year: Int) -> [[Int?]] {
         var day = 1
-        let contextDate = calendar.getDateBy(day: day, month: month, year: year)
-        var weekday = calendar.weekDay(date: contextDate ?? Date())
-        daysInMonth = calendar.daysInMonth(date: contextDate ?? Date())
+        let contextDate = CalendarHelper.getDateBy(day: day, month: month, year: year)
+        var weekday = CalendarHelper.weekDay(date: contextDate ?? Date())
+        daysInMonth = CalendarHelper.daysInMonth(date: contextDate ?? Date())
         var monthMatrix: [[Int?]] = []
         
         for _ in 0...6 { monthMatrix.append([nil]) }
@@ -311,7 +308,7 @@ final class CalendarView: UIView {
     }
     
     private func updateMonthYearButton() {
-        let buttonTitle = String(format: "%@, %d", calendar.monthString(month: currentMonth), currentYear)
+        let buttonTitle = String(format: "%@, %d", CalendarHelper.monthString(month: currentMonth), currentYear)
         setTitleForMonthYearButton(title: buttonTitle)
         calendarCollectionView.reloadData()
         layoutSubviews()
@@ -363,7 +360,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         if let day = monthMatrix[indexPath.row][indexPath.section],
-           let contextDate = calendar.getDateBy(day: day, month: currentMonth, year: currentYear) {
+           let contextDate = CalendarHelper.getDateBy(day: day, month: currentMonth, year: currentYear) {
             
             cell.setupCell(day: day, month: currentMonth, year: currentYear)
             
@@ -385,7 +382,7 @@ extension CalendarView: UICollectionViewDelegate, UICollectionViewDataSource {
                 }
             }
             
-            if calendar.isPastDate(date: contextDate) {
+            if CalendarHelper.isPastDate(date: contextDate) {
                 cell.isUserInteractionEnabled = false
             } else {
                 cell.isUserInteractionEnabled = true

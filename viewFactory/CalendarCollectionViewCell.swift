@@ -24,8 +24,6 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     private var month: Int?
     private var year: Int?
     
-    private let calendar = CalendarHelper()
-    
     private(set) var dayLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -112,6 +110,8 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
+        setConstraints()
     }
     
     // MARK: Public Methods
@@ -120,22 +120,22 @@ class CalendarCollectionViewCell: UICollectionViewCell {
         self.day = day; self.month = month; self.year = year
     }
     
-    func setOrangeMark() {
-        editingMode = false
+    func setOrangeMark(editingMode: Bool = false) {
+        self.editingMode = editingMode
         isMarked = true
         contentView.backgroundColor = CalendarColorHelper.orange
         dayLabel.textColor = .white
-        editingMode = true
+        self.editingMode = true
     }
     
-    func clearAll() {
-        editingMode = false
+    func clearAll(editingMode: Bool = false) {
+        self.editingMode = editingMode
         contentView.backgroundColor = .clear
         dayLabel.textColor = CalendarColorHelper.blackText2
         day = nil
         isGlowing = false
         isMarked = false
-        editingMode = true
+        self.editingMode = true
     }
     
     func toString() -> String {
@@ -145,13 +145,13 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     
     func toDate() -> Date {
         guard let day = day, let month = month, let year = year else { return Date() }
-        return calendar.getDateBy(day: day, month: month, year: year) ?? Date()
+        return CalendarHelper.getDateBy(day: day, month: month, year: year) ?? Date()
     }
     
     static func unselectLast() {
         selectedCellsArray.last?.isMarked = false
     }
-
+    
     func roundGlowViewTo(side: roundOrientation) {
         let cornerRadius = (frame.height * 0.7) / 2
         switch side {
@@ -165,6 +165,18 @@ class CalendarCollectionViewCell: UICollectionViewCell {
             CalendarUtils.addPartialCornerRadius(
                 view: glowView, cornerRadius: cornerRadius, corners: [.layerMinXMaxYCorner, .layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner], legacyCorners: [.bottomLeft, .topLeft, .topRight, .bottomRight])
         }
+    }
+    
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        var equal = false
+        guard let object = object as? CalendarCollectionViewCell else { return false }
+        if  self.day == object.day     &&
+            self.month == object.month &&
+            self.year == object.year {
+                equal = true
+        }
+        return equal
     }
     
     // MARK: Private Methods

@@ -18,8 +18,6 @@ class CalendarMonthYearView: UIView {
     
     private let cellIdentifier = "monthCell"
     
-    private let calendar = CalendarHelper()
-    
     private(set) var horizontalInset = CGFloat(16)
     
     private lazy var currentMonth = 0 {
@@ -32,7 +30,7 @@ class CalendarMonthYearView: UIView {
         }
     }
     
-    private lazy var currentYear = calendar.year(date: Date())
+    private lazy var currentYear = CalendarHelper.year(date: Date())
     
     private lazy var dynamicCollectionSize: (width: NSLayoutConstraint, height: NSLayoutConstraint) = {
         let height = monthYearCollectionView.heightAnchor.constraint(equalToConstant: 0)
@@ -238,7 +236,7 @@ extension CalendarMonthYearView: UICollectionViewDelegate, UICollectionViewDataS
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? CalendarMonthYearCell else { return UICollectionViewCell() }
         cell.setupCell(month: indexPath.row + 1, year: currentYear)
         
-        if calendar.isPastDate(date: cell.getDate(), granularity: .month) {
+        if CalendarHelper.isPastDate(date: cell.getDate(), granularity: .month) {
             cell.isUserInteractionEnabled = false
         } else {
             cell.isUserInteractionEnabled = true
