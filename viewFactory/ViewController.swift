@@ -9,7 +9,7 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    private lazy var contentView = CalendarView()
+    private lazy var contentView = CalendarMonthYearView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,33 +42,33 @@ struct PreviewViewController: PreviewProvider {
     }
 }
 
-//extension ViewController: CalendarMonthYearViewProtocol {
-//
-//    func didSelectMonthAndYear(month: Int, year: Int) {
-//        print("Selected: \(month)/\(year)")
-//    }
-//
-//    func invalidSelection() {
-//        print("Selecione o mês")
-//    }
-//
-//}
+extension ViewController: CalendarMonthYearViewProtocol {
 
-extension ViewController: CalendarViewProtocol {
-    func didUpdateDate(_ dateArray: [Date]) {
-        print("didUpdateDate: \(dateArray)")
+    func didSelectMonthAndYear(month: Int, year: Int) {
+        print("Selected: \(month)/\(year)")
     }
 
-    func didTapMonthYearButton(_ sender: UIButton) {
-        print("didTapMonthYearButton: \(sender.titleLabel?.text)")
-    }
-
-    func didTapDiaButton(_ sender: CalendarRoundedButton) {
-        print("didTapDiaButton: \(sender.titleLabel?.text)")
-    }
-
-    func didTapPeriodoButton(_ sender: CalendarRoundedButton) {
-        print("didTapPeriodoButton: \(sender.titleLabel?.text)")
+    func invalidSelection() {
+        print("Selecione o mês")
     }
 
 }
+
+//extension ViewController: CalendarViewProtocol {
+//    func didUpdateDate(_ dateArray: [Date]) {
+//        print("didUpdateDate: \(dateArray)")
+//    }
+//
+//    func didTapMonthYearButton(_ sender: UIButton) {
+//        print("didTapMonthYearButton: \(sender.titleLabel?.text)")
+//    }
+//
+//    func didTapDiaButton(_ sender: CalendarRoundedButton) {
+//        print("didTapDiaButton: \(sender.titleLabel?.text)")
+//    }
+//
+//    func didTapPeriodoButton(_ sender: CalendarRoundedButton) {
+//        print("didTapPeriodoButton: \(sender.titleLabel?.text)")
+//    }
+
+//}

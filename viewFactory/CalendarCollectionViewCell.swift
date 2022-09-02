@@ -99,6 +99,7 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     enum roundOrientation {
         case left
         case right
+        case full
     }
     
     // MARK: Init Methods
@@ -154,12 +155,15 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     func roundGlowViewTo(side: roundOrientation) {
         let cornerRadius = (frame.height * 0.7) / 2
         switch side {
-        case.left:
+        case .left:
             CalendarUtils.addPartialCornerRadius(
                 view: glowView, cornerRadius: cornerRadius, corners: [.layerMinXMinYCorner, .layerMinXMaxYCorner], legacyCorners: [.topLeft, .bottomLeft])
-        case.right:
+        case .right:
             CalendarUtils.addPartialCornerRadius(
                 view: glowView, cornerRadius: cornerRadius, corners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner], legacyCorners: [.topRight, .bottomRight])
+        case .full:
+            CalendarUtils.addPartialCornerRadius(
+                view: glowView, cornerRadius: cornerRadius, corners: [.layerMinXMaxYCorner, .layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner], legacyCorners: [.bottomLeft, .topLeft, .topRight, .bottomRight])
         }
     }
     

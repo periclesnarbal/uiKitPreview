@@ -32,6 +32,8 @@ final class CalendarView: UIView {
         return (width, height)
     }()
     
+    private(set) var horizontalInset = CGFloat(16)
+    
     private lazy var currentMonth = calendar.month(date: Date())
     private lazy var currentYear = calendar.year(date: Date())
     
@@ -48,6 +50,7 @@ final class CalendarView: UIView {
     private let calendarTopButtonsView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = true
         return view
     }()
     
@@ -92,7 +95,12 @@ final class CalendarView: UIView {
         button.backgroundColor = .white
         applyShadow(view: button)
         button.layer.cornerRadius = 16
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        if #available(iOS 13.0, *) {
+            button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        } else {
+            button.setTitle("<", for: .normal)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
         button.tintColor = CalendarColorHelper.orange
         button.addTarget(self, action: #selector(backMonth), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +112,12 @@ final class CalendarView: UIView {
         button.backgroundColor = .white
         applyShadow(view: button)
         button.layer.cornerRadius = 16
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        if #available(iOS 13.0, *) {
+            button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        } else {
+            button.setTitle(">", for: .normal)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }
         button.tintColor = CalendarColorHelper.orange
         button.addTarget(self, action: #selector(nextMonth), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -128,6 +141,7 @@ final class CalendarView: UIView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.backgroundColor = CalendarColorHelper.lightGray
         stack.distribution = .fill
+        stack.alignment = .center
         return stack
     }()
     
@@ -146,13 +160,15 @@ final class CalendarView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
+        setConstraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         if frame.width == 0 { return }
         dynamicCollectionSize.height.constant = calculateCollectionHeigth()
-        dynamicCollectionSize.width.constant = frame.width
+        dynamicCollectionSize.width.constant = (frame.width - (horizontalInset * 2))
         dynamicCollectionSize.height.isActive = true
         dynamicCollectionSize.width.isActive = true
     }
@@ -161,9 +177,9 @@ final class CalendarView: UIView {
     
     private func calculateCollectionHeigth() -> CGFloat {
         if frame.width == 0 { return 0 }
-        let availableWidth: Double = frame.width
+        let availableWidth: Double = (frame.width - (horizontalInset * 2))
         let maxNumColumns = 7
-        let cellHeight: CGFloat = ((availableWidth) / Double(maxNumColumns))
+        let cellHeight: CGFloat = ((availableWidth) / Double(maxNumColumns)).rounded(.up)
         let height = cellHeight * CGFloat(calendarCollectionView.numberOfSections)
         return height
     }
@@ -187,8 +203,10 @@ final class CalendarView: UIView {
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            calendarTopButtonsView.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor),
         
-            diaButton.leadingAnchor.constraint(equalTo: calendarTopButtonsView.leadingAnchor),
+            diaButton.leadingAnchor.constraint(equalTo: calendarTopButtonsView.leadingAnchor, constant: horizontalInset),
             diaButton.topAnchor.constraint(equalTo: calendarTopButtonsView.topAnchor, constant: 13),
             diaButton.bottomAnchor.constraint(equalTo: calendarTopButtonsView.bottomAnchor, constant: -12),
 
@@ -197,11 +215,12 @@ final class CalendarView: UIView {
             periodoButton.bottomAnchor.constraint(equalTo: calendarTopButtonsView.bottomAnchor, constant: -12),
             
             calendarHeaderView.heightAnchor.constraint(equalToConstant: 58),
+            calendarHeaderView.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor),
             
-            monthYearButton.leadingAnchor.constraint(equalTo: calendarHeaderView.leadingAnchor),
+            monthYearButton.leadingAnchor.constraint(equalTo: calendarHeaderView.leadingAnchor, constant: horizontalInset),
             monthYearButton.centerYAnchor.constraint(equalTo: calendarHeaderView.centerYAnchor),
 
-            nextMonthButton.trailingAnchor.constraint(equalTo: calendarHeaderView.trailingAnchor),
+            nextMonthButton.trailingAnchor.constraint(equalTo: calendarHeaderView.trailingAnchor, constant: (horizontalInset * -1)),
             nextMonthButton.centerYAnchor.constraint(equalTo: calendarHeaderView.centerYAnchor),
             nextMonthButton.widthAnchor.constraint(equalToConstant: 32),
             nextMonthButton.heightAnchor.constraint(equalToConstant: 32),
@@ -318,14 +337,6 @@ final class CalendarView: UIView {
     private func updateUI() {
         calendarCollectionView.reloadData()
         delegate?.didUpdateDate(CalendarCollectionViewCell.selectedHistoryArraySorted)
-    }
-}
-
-struct PreviewView: PreviewProvider {
-    static var previews: some View {
-        ViewPreview {
-            CalendarView()
-        }.edgesIgnoringSafeArea(.all)
     }
 }
 

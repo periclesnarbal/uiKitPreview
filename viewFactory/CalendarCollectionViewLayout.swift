@@ -21,7 +21,7 @@ class CalendarCollectionViewLayout: UICollectionViewFlowLayout {
         
         let availableWidth: Double = collectionView.bounds.width
         let maxNumColumns = 7
-        let cellWidth: Double = ((availableWidth) / Double(maxNumColumns))
+        let cellWidth: Double = ((availableWidth) / Double(maxNumColumns)) - 0.00000000000001
         
         itemSize = CGSize(width: cellWidth, height: cellWidth)
     }

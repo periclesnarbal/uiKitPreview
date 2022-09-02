@@ -20,6 +20,8 @@ class CalendarMonthYearView: UIView {
     
     private let calendar = CalendarHelper()
     
+    private(set) var horizontalInset = CGFloat(16)
+    
     private lazy var currentMonth = 0 {
         didSet {
             if currentMonth != 0 {
@@ -131,13 +133,15 @@ class CalendarMonthYearView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
+        setConstraints()
+        layoutSubviews()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         if frame.width == 0 { return }
         dynamicCollectionSize.height.constant = calculateCollectionHeigth()
-        dynamicCollectionSize.width.constant = frame.width
         dynamicCollectionSize.height.isActive = true
         dynamicCollectionSize.width.isActive = true
     }
@@ -161,24 +165,29 @@ class CalendarMonthYearView: UIView {
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             choiceMesYearLabel.topAnchor.constraint(equalTo: topHeaderView.topAnchor, constant: 16),
-            choiceMesYearLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor),
+            choiceMesYearLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor, constant: horizontalInset),
             choiceMesYearLabel.heightAnchor.constraint(equalToConstant: 24),
+            
+            monthYearCollectionView.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor, constant: horizontalInset),
+            monthYearCollectionView.trailingAnchor.constraint(equalTo: contentStackView.trailingAnchor, constant: (horizontalInset * -1)),
 
             mesLabel.topAnchor.constraint(equalTo: choiceMesYearLabel.bottomAnchor, constant: 8),
-            mesLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor),
+            mesLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor, constant: horizontalInset),
             mesLabel.bottomAnchor.constraint(equalTo: topHeaderView.bottomAnchor, constant: -8),
             mesLabel.heightAnchor.constraint(equalToConstant: 24),
 
             anoLabel.topAnchor.constraint(equalTo: middleHeaderView.topAnchor, constant: 20),
-            anoLabel.leadingAnchor.constraint(equalTo: middleHeaderView.leadingAnchor),
+            anoLabel.leadingAnchor.constraint(equalTo: middleHeaderView.leadingAnchor, constant: horizontalInset),
             anoLabel.bottomAnchor.constraint(equalTo: middleHeaderView.bottomAnchor, constant: -8),
-            anoLabel.heightAnchor.constraint(equalToConstant: 24)
+            anoLabel.heightAnchor.constraint(equalToConstant: 24),
+            
+            anoStackView.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor, constant: horizontalInset)
         ])
     }
     
     private func calculateCollectionHeigth() -> CGFloat {
         if frame.width == 0 { return 0 }
-        let totalWidth = frame.width
+        let totalWidth = (frame.width - CGFloat(horizontalInset * 2))
         let cellWidth = CGFloat(90)
         let numberOfRows = ((12 * cellWidth) / totalWidth).rounded(.up)
         let heigth = numberOfRows * 47
