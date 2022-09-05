@@ -8,7 +8,8 @@
 import UIKit
 
 protocol CalendarMonthYearViewProtocol: NSObject {
-    func didSelectMonthAndYear(month: Int, year: Int)
+    func didSelectMonthAndYear(month: Int, monthString: String, year: Int)
+    func didChangeYear(year: Int)
     func invalidSelection()
 }
 
@@ -23,7 +24,7 @@ class CalendarMonthYearView: UIView {
     private lazy var currentMonth = 0 {
         didSet {
             if currentMonth != 0 {
-                delegate?.didSelectMonthAndYear(month: currentMonth, year: currentYear)
+                delegate?.didSelectMonthAndYear(month: currentMonth, monthString: getMonthString(), year: currentYear)
             } else {
                 delegate?.invalidSelection()
             }
@@ -43,7 +44,7 @@ class CalendarMonthYearView: UIView {
     
     private let topHeaderView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         return view
     }()
     
@@ -69,7 +70,7 @@ class CalendarMonthYearView: UIView {
     
     private let middleHeaderView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         return view
     }()
     
@@ -97,18 +98,17 @@ class CalendarMonthYearView: UIView {
     private lazy var anoStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: createYearButtons())
         stack.axis = .horizontal
-        stack.backgroundColor = .white
+        stack.backgroundColor = .clear
         stack.distribution = .fill
         stack.alignment = .fill
         stack.spacing = 8
-        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
     private lazy var contentStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [topHeaderView, monthYearCollectionView, middleHeaderView, anoStackView])
         stack.axis = .vertical
-        stack.backgroundColor = .white
+        stack.backgroundColor = .clear
         stack.distribution = .fill
         stack.alignment = .leading
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -140,6 +140,7 @@ class CalendarMonthYearView: UIView {
         super.layoutSubviews()
         if frame.width == 0 { return }
         dynamicCollectionSize.height.constant = calculateCollectionHeigth()
+        dynamicCollectionSize.width.constant = (frame.width - (horizontalInset * 2))
         dynamicCollectionSize.height.isActive = true
         dynamicCollectionSize.width.isActive = true
     }
@@ -147,7 +148,7 @@ class CalendarMonthYearView: UIView {
     // MARK: Private Methods
     
     private func setupView() {
-        backgroundColor = .clear
+        backgroundColor = .white
         
         addSubview(contentStackView)
         topHeaderView.addSubview(choiceMesYearLabel)
@@ -158,35 +159,31 @@ class CalendarMonthYearView: UIView {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: topAnchor),
-            contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalInset),
+            contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: (horizontalInset * -1)),
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             choiceMesYearLabel.topAnchor.constraint(equalTo: topHeaderView.topAnchor, constant: 16),
-            choiceMesYearLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor, constant: horizontalInset),
+            choiceMesYearLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor),
             choiceMesYearLabel.heightAnchor.constraint(equalToConstant: 24),
-            
-            monthYearCollectionView.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor, constant: horizontalInset),
-            monthYearCollectionView.trailingAnchor.constraint(equalTo: contentStackView.trailingAnchor, constant: (horizontalInset * -1)),
 
             mesLabel.topAnchor.constraint(equalTo: choiceMesYearLabel.bottomAnchor, constant: 8),
-            mesLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor, constant: horizontalInset),
+            mesLabel.leadingAnchor.constraint(equalTo: topHeaderView.leadingAnchor),
             mesLabel.bottomAnchor.constraint(equalTo: topHeaderView.bottomAnchor, constant: -8),
             mesLabel.heightAnchor.constraint(equalToConstant: 24),
 
-            anoLabel.topAnchor.constraint(equalTo: middleHeaderView.topAnchor, constant: 20),
-            anoLabel.leadingAnchor.constraint(equalTo: middleHeaderView.leadingAnchor, constant: horizontalInset),
+            anoLabel.topAnchor.constraint(equalTo: middleHeaderView.topAnchor, constant: 12),
+            anoLabel.leadingAnchor.constraint(equalTo: middleHeaderView.leadingAnchor),
             anoLabel.bottomAnchor.constraint(equalTo: middleHeaderView.bottomAnchor, constant: -8),
-            anoLabel.heightAnchor.constraint(equalToConstant: 24),
+            anoLabel.heightAnchor.constraint(equalToConstant: 24)
             
-            anoStackView.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor, constant: horizontalInset)
         ])
     }
     
     private func calculateCollectionHeigth() -> CGFloat {
         if frame.width == 0 { return 0 }
         let totalWidth = (frame.width - CGFloat(horizontalInset * 2))
-        let cellWidth = CGFloat(90)
+        let cellWidth = CGFloat(100)
         let numberOfRows = ((12 * cellWidth) / totalWidth).rounded(.up)
         let heigth = numberOfRows * 47
         return heigth
@@ -214,12 +211,18 @@ class CalendarMonthYearView: UIView {
             currentYear = valueNumber
             currentMonth = 0
             monthYearCollectionView.reloadData()
+            delegate?.didChangeYear(year: valueNumber)
         }
     }
     
     private func unselectAllYearButtons() {
         guard let arrayButton = anoStackView.arrangedSubviews as? [CalendarRoundedButton] else { return }
         arrayButton.forEach({ $0.isSelected = false })
+    }
+    
+    private func getMonthString() -> String {
+        guard let cell = monthYearCollectionView.cellForItem(at: IndexPath(row: currentMonth - 1, section: 0)) as? CalendarMonthYearCell else { return "" }
+        return cell.monthLabel.text ?? ""
     }
 }
 

@@ -34,7 +34,7 @@ final class ViewController: UIViewController {
 
 final class SecondViewController: UIViewController {
     
-    private lazy var contentView = CalendarView()
+    private lazy var contentView = CalendarMonthYearView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,42 +57,42 @@ final class SecondViewController: UIViewController {
     }
 }
 
-import SwiftUI
-struct PreviewViewController: PreviewProvider {
-    static var previews: some View {
-        ViewControllerPreview {
-            ViewController()
-        }.edgesIgnoringSafeArea(.all)
+//import SwiftUI
+//struct PreviewViewController: PreviewProvider {
+//    static var previews: some View {
+//        ViewControllerPreview {
+//            ViewController()
+//        }.edgesIgnoringSafeArea(.all)
+//    }
+//}
+
+extension SecondViewController: CalendarMonthYearViewProtocol {
+
+    func didSelectMonthAndYear(month: Int, year: Int) {
+        print("Selected: \(month)/\(year)")
     }
+
+    func invalidSelection() {
+        print("Selecione o mês")
+    }
+
 }
 
-//extension ViewController: CalendarMonthYearViewProtocol {
-//
-//    func didSelectMonthAndYear(month: Int, year: Int) {
-//        print("Selected: \(month)/\(year)")
+//extension SecondViewController: CalendarViewProtocol {
+//    func didUpdateDate(_ dateArray: [Date]) {
+//        print("didUpdateDate: \(dateArray)")
 //    }
 //
-//    func invalidSelection() {
-//        print("Selecione o mês")
+//    func didTapMonthYearButton(_ sender: UIButton) {
+//        print("didTapMonthYearButton: \(sender.titleLabel?.text)")
+//    }
+//
+//    func didTapDiaButton(_ sender: CalendarRoundedButton) {
+//        print("didTapDiaButton: \(sender.titleLabel?.text)")
+//    }
+//
+//    func didTapPeriodoButton(_ sender: CalendarRoundedButton) {
+//        print("didTapPeriodoButton: \(sender.titleLabel?.text)")
 //    }
 //
 //}
-
-extension SecondViewController: CalendarViewProtocol {
-    func didUpdateDate(_ dateArray: [Date]) {
-        print("didUpdateDate: \(dateArray)")
-    }
-
-    func didTapMonthYearButton(_ sender: UIButton) {
-        print("didTapMonthYearButton: \(sender.titleLabel?.text)")
-    }
-
-    func didTapDiaButton(_ sender: CalendarRoundedButton) {
-        print("didTapDiaButton: \(sender.titleLabel?.text)")
-    }
-
-    func didTapPeriodoButton(_ sender: CalendarRoundedButton) {
-        print("didTapPeriodoButton: \(sender.titleLabel?.text)")
-    }
-
-}

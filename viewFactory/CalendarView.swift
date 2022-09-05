@@ -171,6 +171,12 @@ final class CalendarView: UIView {
         dynamicCollectionSize.width.isActive = true
     }
     
+    func selectMonthYear(month: Int, year: Int) {
+        currentMonth = month
+        currentYear = year
+        monthMatrix = createMonthBy(month: currentMonth, year: currentYear)
+    }
+    
     // MARK: Private Methods
     
     private func calculateCollectionHeigth() -> CGFloat {
