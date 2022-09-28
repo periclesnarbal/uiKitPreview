@@ -8,14 +8,16 @@
 import SwiftUI
 import UIKit
 
-protocol LeftIconTitleAndDescriptionViewProtocol {
+protocol SideIconTitleAndDescriptionViewProtocol {
     func addDescription(label: UILabel, spacingAfter spacing: CGFloat)
     func addButton(button: UIButton, spacingAfter spacing: CGFloat)
 }
 
-final class LeftIconTitleAndDescriptionView: UIView, LeftIconTitleAndDescriptionViewProtocol {
-
-   let iconImageView: UIImageView = {
+final class SideIconTitleAndDescriptionView: UIView, SideIconTitleAndDescriptionViewProtocol {
+    
+    // MARK: Propriedades Públicas
+    
+    let iconImageView: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
         return img
@@ -30,11 +32,13 @@ final class LeftIconTitleAndDescriptionView: UIView, LeftIconTitleAndDescription
         return label
     }()
     
+    // MARK: Propriedades Privadas
+    
     private let horizontalStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.alignment = .top
-       
+        
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -47,6 +51,8 @@ final class LeftIconTitleAndDescriptionView: UIView, LeftIconTitleAndDescription
         return stack
     }()
     
+    // MARK: Inicializadores
+    
     init(frame: CGRect = .zero, icon: UIImage? = nil, iconSize: CGSize = CGSize(width: 24, height: 24), iconTextHSpacing: CGFloat = 8, title: String, padding: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: -16, right: -16)) {
         super.init(frame: frame)
         
@@ -56,7 +62,7 @@ final class LeftIconTitleAndDescriptionView: UIView, LeftIconTitleAndDescription
         titleLabel.text = title
         
         horizontalStack.spacing = iconTextHSpacing
-    
+        
         setupView()
         setupConstraints(padding: padding, iconSize: iconSize)
     }
@@ -65,6 +71,8 @@ final class LeftIconTitleAndDescriptionView: UIView, LeftIconTitleAndDescription
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    // MARK: Métodos Públicos
     
     func addDescription(label: UILabel, spacingAfter spacing: CGFloat = 8) {
         label.numberOfLines = 0
@@ -80,25 +88,22 @@ final class LeftIconTitleAndDescriptionView: UIView, LeftIconTitleAndDescription
         textStack.addSpacing(spacing, after: button)
     }
     
+    // MARK: Métodos Privados
+    
     private func setupView() {
         addSubview(horizontalStack)
         horizontalStack.addArrangedSubview(iconImageView)
         horizontalStack.addArrangedSubview(textStack)
         textStack.addArrangedSubview(titleLabel)
         textStack.addSpacing(8, after: titleLabel)
-        
-        backgroundColor = .white
     }
     
     private func setupConstraints(padding: UIEdgeInsets, iconSize: CGSize) {
-        let iconSize = iconSize
-        let contentInsets = padding
-        
         NSLayoutConstraint.activate([
-            horizontalStack.topAnchor.constraint(equalTo: topAnchor, constant: contentInsets.top),
-            horizontalStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentInsets.left),
-            horizontalStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: contentInsets.right),
-            horizontalStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: contentInsets.bottom),
+            horizontalStack.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            horizontalStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding.left),
+            horizontalStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: padding.right),
+            horizontalStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: padding.bottom),
             
             iconImageView.heightAnchor.constraint(equalToConstant: iconSize.height),
             iconImageView.widthAnchor.constraint(equalToConstant: iconSize.width)
@@ -109,7 +114,7 @@ final class LeftIconTitleAndDescriptionView: UIView, LeftIconTitleAndDescription
 struct PreviewLeftIconTitleAndDescriptionView: PreviewProvider {
     static var previews: some View {
         ViewPreview {
-            LeftIconTitleAndDescriptionView(icon:  UIImage(systemName: "person.fill"), title: "Ajuda Dinheiro na hora! Após aprovado em até 24 horas o dinheiro cai na sua conta.")
+            SideIconTitleAndDescriptionView(icon:  UIImage(systemName: "person.fill"), title: "Ajuda Dinheiro na hora! Após aprovado em até 24 horas o dinheiro cai na sua conta.")
         }.edgesIgnoringSafeArea(.all)
     }
 }

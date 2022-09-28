@@ -10,12 +10,13 @@ import SwiftUI
 
 final class TemplateView: UIView {
 
-    // MARK: Propriedades
+    // MARK: Propriedades privadas
     
     private let cabecalhoTituloLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Capital na\nMão Bmg" // TODO: ADICIONAR LOCALIZABLE
 //        lbl.font = UIFont() // TODO: ADICIONAR FONTE
+        lbl.textColor = .white
         lbl.numberOfLines = 2
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
@@ -23,7 +24,6 @@ final class TemplateView: UIView {
     
     private let cabecalhoImageView: UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .cyan
         img.contentMode = .scaleAspectFill
         img.image = UIImage(systemName: "person.fill") // TODO: ADICIONAR IMAGEM
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,6 @@ final class TemplateView: UIView {
     
     private lazy var cabecalhoTopoView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
         view.addSubview(cabecalhoTituloLabel)
         view.addSubview(cabecalhoImageView)
         return view
@@ -42,6 +41,7 @@ final class TemplateView: UIView {
         let lbl = UILabel()
         lbl.text = "É o Crédito emergencial para empresas.\nParcelas que cabem no seu bolso e valores calculados, com base no seu faturamento e transações na sua maquininha de cartão.\nÓtimas condições  utilizando seus recebíveis como garantia." // TODO: ADICIONAR LOCALIZABLE
 //        lbl.font = UIFont() // TODO: ADICIONAR FONTE
+        lbl.textColor = .white
         lbl.numberOfLines = 0
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
@@ -49,30 +49,29 @@ final class TemplateView: UIView {
     
     private lazy var cabecalhoMeioView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
         view.addSubview(cabecalhoDescriptionLabel)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let cabecalhoOrangeButton: UIButton = {
+    private lazy var cabecalhoOrangeButton: UIButton = {
         let btn = UIButton()
-        btn.setTitle("BUTTON", for: .normal) // TODO: ADICIONAR LOCALIZABLE
-        btn.backgroundColor = .orange
+        btn.setTitle("Quero pedir meu capital", for: .normal) // TODO: ADICIONAR LOCALIZABLE
+        btn.backgroundColor = .orange // TODO: ADICIONAR COR
+        btn.addTarget(self, action: #selector(orangeButtonAction), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
     private lazy var cabecalhoBaixoView: UIView = {
         let view = UIView()
-        view.backgroundColor = .brown
         view.addSubview(cabecalhoOrangeButton)
         return view
     }()
     
     private lazy var cabecalhoStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [cabecalhoTopoView, cabecalhoMeioView, cabecalhoBaixoView])
-        stack.backgroundColor = .white
+        stack.backgroundColor = .purple
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -99,13 +98,12 @@ final class TemplateView: UIView {
         let view = UIView()
         view.addSubview(corpoConteudoTituloLabel)
         view.addSubview(bastaoLaranjaView)
-        view.backgroundColor = .purple
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let dinheiroNaHoraView: LeftIconTitleAndDescriptionView = {
-        let view = LeftIconTitleAndDescriptionView(icon: UIImage(systemName: "person.fill"),
+    private let dinheiroNaHoraView: SideIconTitleAndDescriptionView = {
+        let view = SideIconTitleAndDescriptionView(icon: UIImage(systemName: "person.fill"),
                                                    iconTextHSpacing: 18,
                                                    title: "Ajuda Dinheiro na hora! Após aprovado em até 24 horas o dinheiro cai na sua conta.",
                                                    padding: UIEdgeInsets(top: 0, left: 18, bottom: -16, right: -16))
@@ -113,8 +111,8 @@ final class TemplateView: UIView {
         return view
     }()
     
-    private let calendarioPlanejamentoView: LeftIconTitleAndDescriptionView = {
-        let view = LeftIconTitleAndDescriptionView(icon: UIImage(systemName: "person.fill"),
+    private let calendarioPlanejamentoView: SideIconTitleAndDescriptionView = {
+        let view = SideIconTitleAndDescriptionView(icon: UIImage(systemName: "person.fill"),
                                                    iconTextHSpacing: 18,
                                                    title: "Para não sair do planejamento: parcelas fixas em 3x, 6x ou 12x conforme o plano do seu negócio.",
                                                    padding: UIEdgeInsets(top: 0, left: 18, bottom: -16, right: -16))
@@ -122,8 +120,8 @@ final class TemplateView: UIView {
         return view
     }()
     
-    private let segurancaPagamentoView: LeftIconTitleAndDescriptionView = {
-        let view = LeftIconTitleAndDescriptionView(icon: UIImage(systemName: "person.fill"),
+    private let segurancaPagamentoView: SideIconTitleAndDescriptionView = {
+        let view = SideIconTitleAndDescriptionView(icon: UIImage(systemName: "person.fill"),
                                                    iconTextHSpacing: 18,
                                                    title: "Segurança na hora de pagar! Seus recebíveis são usados como garantia no seu empréstimo.",
                                                    padding: UIEdgeInsets(top: 0, left: 18, bottom: -16, right: -16))
@@ -142,26 +140,29 @@ final class TemplateView: UIView {
         let view = UIView()
         view.addSubview(corpoConteudoCabecalhoView)
         view.addSubview(corpoConteudoStackView)
-        view.backgroundColor = .green
+        view.layer.cornerRadius = 8
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let rodapeOrangeButton: UIButton = {
+    private lazy var rodapeOrangeButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("BUTTON", for: .normal) // TODO: ADICIONAR LOCALIZABLE
         btn.backgroundColor = .orange
+        btn.addTarget(self, action: #selector(orangeButtonAction), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
     private lazy var rodapeView: UIView = {
         let view = UIView()
-        view.backgroundColor = .brown
         view.addSubview(rodapeOrangeButton)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    // MARK: Inicializadores
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
@@ -175,13 +176,20 @@ final class TemplateView: UIView {
         configuraConstraints()
     }
     
+    // MARK: Métodos Privados
+    
     private func configuraView() {
-        backgroundColor = .yellow
+        backgroundColor = .lightGray
         addSubview(cabecalhoStackView)
         addSubview(corpoConteudoView)
         addSubview(rodapeView)
     }
     
+    @objc
+    private func orangeButtonAction() {
+        print("ORANGE BUTTON DID TAPED")
+    }
+
     private func configuraConstraints() {
         NSLayoutConstraint.activate([
             cabecalhoStackView.topAnchor.constraint(equalTo: topAnchor),
@@ -250,7 +258,7 @@ struct PreviewView: PreviewProvider {
     static var previews: some View {
         ViewPreview {
             TemplateView()
-        }.edgesIgnoringSafeArea(.all)
+        }.previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/375.0/*@END_MENU_TOKEN@*/, height: 820.0)).edgesIgnoringSafeArea(.all)
     }
 }
 
