@@ -9,11 +9,34 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    private lazy var contentView = TemplateView(frame: view.frame)
+    let contentView: TemplateView = {
+        let view = TemplateView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView(frame: UIScreen.main.bounds)
+        scroll.addSubview(contentView)
+        return scroll
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(contentView)
+        view.addSubview(scrollView)
+        
+        setupConstraints()
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
     }
 }
 
